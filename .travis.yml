@@ -14,7 +14,8 @@ install:
   - pip install ansible==1.8.2
 
   # Add ansible.cfg to pick up roles path.
-  - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
+  - "printf '[defaults]\n' > ansible.cfg"
+  - "printf 'roles_path = ../' >> ansible.cfg"
 
 script:
   # Check the role/playbook's syntax.
