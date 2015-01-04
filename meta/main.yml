@@ -16,5 +16,6 @@ galaxy_info:
     - wheezy
     - jessie
   categories:
-    - virtualization: container
-    - container: lxc
+    - virtualization
+    - container
+    - lxc
