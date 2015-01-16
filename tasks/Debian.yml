@@ -4,10 +4,12 @@
   command: docker
   register: result
   ignore_errors: True
+  tags: docker
 
 - name: Add repository for debian wheesy
   apt_repository: repo='deb http://http.debian.net/debian wheezy-backports main' update_cache=yes
   when: ansible_distribution_release == 'wheezy' and result|failed
+  tags: docker
 
 - name: Install packages dependencies for debian wheesy
   apt: pkg={{ item }} state=installed
@@ -15,12 +17,15 @@
     - linux-image-amd64
     - curl
   when: ansible_distribution_release == 'wheezy' and result|failed
+  tags: docker
 
 - name: Install docker for debian wheesy
   shell: curl -sSL https://get.docker.com/ | sh
   when: ansible_distribution_release == 'wheezy' and result|failed
+  tags: docker
 
 - name: Install docker for debian jessie
   apt: pkg={{ item }} state=installed
   with_items: docker_packages
   when: ansible_distribution_release == 'jessie' and result|failed
+  tags: docker
