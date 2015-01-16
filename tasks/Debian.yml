@@ -7,12 +7,13 @@
 
 - name: Add repository for debian wheesy
   apt_repository: repo='deb http://http.debian.net/debian wheezy-backports main' update_cache=yes
-  when: ansible_distribution_release == 'wheezy' and tresult|failed
+  when: ansible_distribution_release == 'wheezy' and result|failed
 
 - name: Install packages dependencies for debian wheesy
   apt: pkg={{ item }} state=installed
   with_items:
     - linux-image-amd64
+    - curl
   when: ansible_distribution_release == 'wheezy' and result|failed
 
 - name: Install docker for debian wheesy
