@@ -1,20 +1,25 @@
 ---
 
+- name: Test if docker is installed
+  command: docker
+  register: result
+  ignore_errors: True
+
 - name: Add repository for debian wheesy
   apt_repository: repo='deb http://http.debian.net/debian wheezy-backports main' update_cache=yes
-  when: ansible_distribution_release == 'wheezy'
+  when: ansible_distribution_release == 'wheezy' and tresult|failed
 
 - name: Install packages dependencies for debian wheesy
   apt: pkg={{ item }} state=installed
   with_items:
     - linux-image-amd64
-  when: ansible_distribution_release == 'wheezy'
+  when: ansible_distribution_release == 'wheezy' and result|failed
 
 - name: Install docker for debian wheesy
   shell: curl -sSL https://get.docker.com/ | sh
-  when: ansible_distribution_release == 'wheezy'
+  when: ansible_distribution_release == 'wheezy' and result|failed
 
 - name: Install docker for debian jessie
   apt: pkg={{ item }} state=installed
   with_items: docker_packages
-  when: ansible_distribution_release == 'jessie'
+  when: ansible_distribution_release == 'jessie' and result|failed
